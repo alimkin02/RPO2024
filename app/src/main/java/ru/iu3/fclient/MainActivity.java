@@ -193,5 +193,4 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
         return p;
     }
 
-
 }
