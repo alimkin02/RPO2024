@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.NonceExpiredException;
 import org.springframework.stereotype.Component;
-import ru.iu3.backend.repositories.UserRepository;
+import ru.iu3.backend.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -27,21 +27,21 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails,
-                                                  UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
 
     }
 
 
     @Override
     protected UserDetails retrieveUser(String userName,
-                                       UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken)
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken)
             throws AuthenticationException {
 
         Object token = usernamePasswordAuthenticationToken.getCredentials();
-        Optional<ru.iu3.backend.models.User> uu = userRepository.findByToken(String.valueOf(token));
+        Optional<ru.iu3.backend.model.User> uu = userRepository.findByToken(String.valueOf(token));
         if (!uu.isPresent())
             throw new UsernameNotFoundException("user is not found");
-        ru.iu3.backend.models.User u = uu.get();
+        ru.iu3.backend.model.User u = uu.get();
 
         boolean timeout = true;
         LocalDateTime dt = LocalDateTime.now();
